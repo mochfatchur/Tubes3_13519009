@@ -1,7 +1,7 @@
 import sqlite3
 
 
-connection = sqlite3.connect('database.db')
+connection = sqlite3.connect('test/database.db')
 cursor = connection.cursor()
 
 class Database:
@@ -35,7 +35,7 @@ class Database:
         connection.commit()
 
     def InsertPrio(self,nilai, jenis):
-        insertTask = '''INSERT INTO Task VALUES ({}, {}); '''.format(nilai,jenis)
+        insertTask = '''INSERT INTO Task VALUES ({}, '{}'); '''.format(nilai,jenis)
         cursor.execute(insertTask)
         connection.commit()
 
