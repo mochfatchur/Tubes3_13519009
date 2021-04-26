@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Judul</title>
+		<link link rel="stylesheet" href={{ url_for('static', filename='style.css') }}>
+	</head>
+	<body>
+		<header>
+			<h1>Judul di sini</h1>
+		</header>
+		<main>
+			<div id="content">
+				<section id="messages">
+					<div class="user-message">
+						<p>Apa saja deadline yang dimiliki sejauh ini?</p>
+					</div>
+					<div class="bot-message">
+						<p>Yes.</p>
+					</div>
+				</section>
+				<section id="input-area">
+					<form method="post">
+						<input name="user-input" placeholder="Pesan" required>
+						<button type="submit">Kirim</button>
+					</form>
+				</section>
+			</div>
+		</main>
+		<footer>
+			<section id="author">
+				<h2>Pembuat</h2>
+				<p>Abdi</p>
+				<p>Fathur</p>
+				<p>Helkia</p>
+			</section>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+body {
+	font-family: sans-serif;
+	margin: 0 auto;
+	width: 50%;
+	min-width: 500px;
+}
+
+header {
+	text-align: center;
+	background-color: #eeeeee;
+}
+
+header * {
+	margin: 0px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.user-message {
+	display: block;
+	text-align: right;	
+}
+
+.bot-message {
+	display: block;
+	color: blue;
+}
+
+#input-area form {
+	display: flex;
+}
+
+#input-area form button {
+	flex-grow: 1;
+}
+
+#input-area form input {
+	flex-grow: 4;
+}
