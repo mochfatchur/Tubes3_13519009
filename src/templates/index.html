@@ -11,12 +11,14 @@
 		<main>
 			<div id="content">
 				<section id="messages">
+					{% for message in message_data %}
 					<div class="user-message">
-						<p>Apa saja deadline yang dimiliki sejauh ini?</p>
+						<p>{{ message[0] }}</p>
 					</div>
 					<div class="bot-message">
-						<p>Yes.</p>
+						<p>{{ message[1] }}</p>
 					</div>
+					{% endfor %}
 				</section>
 				<section id="input-area">
 					<form method="post">
