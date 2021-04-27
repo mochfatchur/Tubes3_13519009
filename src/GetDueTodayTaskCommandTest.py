@@ -8,8 +8,8 @@ class TestClass:
     @pytest.fixture
     def used_data(self):
         return [
-            ("TEST_GDTTCT_001", "IF2220", "kuis", "Regresi", "01/05/2002"),
-            ("TEST_GDTTCT_002", "IF2230", "tubes", "System Call", "25/04/2021"),
+            ("TEST_GDTTCT_001", "IF2220", "kuis", "Regresi", "2002-05-01"),
+            ("TEST_GDTTCT_002", "IF2230", "tubes", "System Call", "2021-04-25"),
             ("TEST_GDTTCT_003", "IF2250", "tubes", "Demo", str(datetime.date(datetime.now()))),
             ("TEST_GDTTCT_004", "IF2240", "ujian", "UAS", str(datetime.date(datetime.now())))
         ]
