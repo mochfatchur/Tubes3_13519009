@@ -10,7 +10,7 @@ path = os.path.abspath("database.db")
 
 
 def getAllTask():
-    conn = conn = sqlite3.connect(path)
+    conn = sqlite3.connect(path)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Task")
     val = cursor.fetchall()
@@ -19,7 +19,7 @@ def getAllTask():
 
 
 def getSpesificTimeLeftTask(date):
-    conn = conn = sqlite3.connect(path)
+    conn = sqlite3.connect(path)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Task")
     val = cursor.fetchall()
