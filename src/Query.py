@@ -86,9 +86,9 @@ def executeCommand(text):
         return ""
 
 
-# text = "deadline 3 hari ke depan apa saja bot ?"
+text = "deadline 3 hari ke depan apa saja bot ?"
 # text = "tolong ingatkan ada tubes IF2211 (string Matching) pada 28/04/2021"
 # text = "ada tugas apa saja sejauh ini ?"
-text = "bot kuis IF2230 sudah selesai ya, tolong dihilangkan"
+# text = "bot kuis IF2230 sudah selesai ya, tolong dihilangkan"
 # matcher = Matcher()
 print(executeCommand(text))
