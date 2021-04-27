@@ -1,2 +1,4 @@
 @echo off
-py src/app.py
+cd src
+py app.py
+cd ..
