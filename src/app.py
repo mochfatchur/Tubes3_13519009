@@ -6,6 +6,8 @@ from flask import (
     Flask, render_template, request, g, redirect
 )
 
+from DatabaseClass import Database
+
 global chat_data
 chat_data = [("Halo", "Hai")]
 

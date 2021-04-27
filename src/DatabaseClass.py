@@ -1,7 +1,7 @@
 import sqlite3
 
 
-connection = sqlite3.connect('test/database.db')
+connection = sqlite3.connect('../test/database.db')
 cursor = connection.cursor()
 
 class Database:
@@ -9,9 +9,9 @@ class Database:
         # create task table
         createTableTask = '''
         CREATE TABLE IF NOT EXISTS Task(
-        ID VARCHAR(2) NOT NULL,
+        ID VARCHAR(2) PRIMARY KEY NOT NULL,
         nama_matkul VARCHAR(255) NOT NULL,
-        jenis TEXT PRIMARY KEY NOT NULL,
+        jenis TEXT NOT NULL,
         deskripsi TEXT NOT NULL,
         tanggal DATE NOT NULL);
         '''
@@ -41,11 +41,3 @@ class Database:
 
     #def __del__(self):
     #    connection.close()
-
-
-#TEST
-database = Database()
-#database.InsertTask('02','IF3110','Kuis','Bab 2 sampai 3','22/04/2021')
-cursor.execute("SELECT * FROM Task")
-print(cursor.fetchall())
-#connection.close()
