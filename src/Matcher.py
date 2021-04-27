@@ -28,6 +28,7 @@ class Matcher:
             "hari ini",
             "dibatalkan",
             "hapus",
+            "selesai",
             "tambahkan",
             "ingatkan",
             "kapan",
@@ -129,7 +130,7 @@ class Matcher:
             return Context.getSpesificTimeLeftTask
         elif (contextWord == "hari ini"):
             return Context.getDueTodayTask
-        elif (contextWord in ["dibatalkan", "hapus"]):
+        elif (contextWord in ["dibatalkan", "hapus", "selesai"]):
             return Context.deleteTask
         elif (contextWord in ["tambahkan", "ingatkan"]):
             return Context.addTask
