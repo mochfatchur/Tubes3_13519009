@@ -31,3 +31,5 @@ class TestClass:
             WHERE ID = "TEST_ID"
             """
         )
+        
+        database.GetConnection().commit()

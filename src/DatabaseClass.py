@@ -56,7 +56,6 @@ class Database:
         
     def GetCursor(self):
         if not self.connected:
-            print("Hey")
             self.connection = sqlite3.connect('../test/database.db')
             self.cursor = self.connection.cursor()
             self.connected = True
