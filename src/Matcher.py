@@ -37,6 +37,7 @@ class Matcher:
         ]
         self.dateRegex = r"(([0-3]?[0-9])\/([0-1]?[0-9])\/([0-2][0-9][0-9][0-9]))"
         self.taskRegex = r"(kuis|ujian|tubes|tucil) (IF[0-9]{4}) (\(.*\))"
+        self.jenisRegex = r"kuis|ujian|tubes|tucil"
         self.matkulRegex = r"(IF[0-9]{4})"
         self.nDate = r"([0-9]) (minggu|hari)"
 
@@ -158,6 +159,10 @@ class Matcher:
 
     def extractMatkul(self, text):
         match = re.findall(self.matkulRegex, text)
+        return match[0]
+
+    def extractJenis(self, text):
+        match = re.match(self.jenisRegex, text)
         return match[0]
 
     def nDateExtractor(self, text):
