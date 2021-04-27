@@ -37,6 +37,8 @@ class Matcher:
         ]
         self.dateRegex = r"(([0-3]?[0-9])\/([0-1]?[0-9])\/([0-2][0-9][0-9][0-9]))"
         self.taskRegex = r"(kuis|ujian|tubes|tucil) (IF[0-9]{4}) (\(.*\))"
+        self.matkulRegex = r"(IF[0-9]{4})"
+        self.nDate = r"([0-9]) (minggu|hari)"
 
     def computeFail(self, pattern):
         fail = [-1 for i in range(len(pattern))]
@@ -154,11 +156,20 @@ class Matcher:
         task.append(description)
         return task
 
+    def extractMatkul(self, text):
+        match = re.findall(self.matkulRegex, text)
+        return match[0]
 
-text = "tugas saya sangat banyak sekali sejauh ini rasanya sudah lelah sekali"
-pattern = "sejauh ini"
-task = "tubes IF2211 (String Matching) pada 14/04/2021"
-matcher = Matcher()
+    def nDateExtractor(self, text):
+        match = re.findall(self.nDate, text)
+        if (match[0][1] == "minggu"):
+            return 7 * match[0][0]
+        elif (match[0][1] == "hari"):
+            return match[0][0]
+        # text = "tugas saya sangat banyak sekali sejauh ini rasanya sudah lelah sekali"
+        # pattern = "sejauh ini"
+        # task = "tubes IF2211 (String Matching) pada 14/04/2021"
+        # matcher = Matcher()
 
-print(matcher.extractTask(task))
-print(matcher.getContext(text))
+        # print(matcher.extractTask(task))
+        # print(matcher.getContext(text))
