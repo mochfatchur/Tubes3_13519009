@@ -40,12 +40,15 @@ def getSpesificTimeLeftTask(dateEnd):
 
 
 def deleteOneTask(jenis, namaMatkul):
-    conn = conn = sqlite3.connect(path)
+    conn = sqlite3.connect(path)
     cursor = conn.cursor()
     cursor.execute(
         "DELETE FROM Task WHERE jenis = ? AND nama_matkul = ?",
         (jenis,
          namaMatkul,))
+    print(jenis)
+    print(namaMatkul)
+    conn.commit()
     conn.close()
 
 
@@ -77,14 +80,15 @@ def executeCommand(text):
         allTask = getSpesificTimeLeftTask(Endate)
         return stringAllTask(allTask)
     elif (command == Context.deleteTask):
-        arg = matcher.extractTask(text)
-        deleteOneTask(arg[0], arg[1])
+        namaMatkul = matcher.extractMatkul(text)
+        jenis = matcher.extractJenis(text)
+        deleteOneTask(jenis, namaMatkul)
+        return ""
 
 
-# text = "deadline 2 hari ke depan apa saja bot ?"
+text = "deadline 3 hari ke depan apa saja bot ?"
 # text = "tolong ingatkan ada tubes IF2211 (string Matching) pada 28/04/2021"
 # text = "ada tugas apa saja sejauh ini ?"
-text = "bot kuis IF2230 sudah selesai ya, tolong dihilangkan"
-matcher = Matcher()
+# text = "bot kuis IF2230 sudah selesai ya, tolong dihilangkan"
+# matcher = Matcher()
 print(executeCommand(text))
-print(re.findall(matcher.taskRegex, text))

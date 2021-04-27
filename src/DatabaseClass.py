@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class Database:
     connection = None
     cursor = None
@@ -27,7 +28,7 @@ class Database:
         jenis TEXT PRIMARY KEY NOT NULL);
         '''
         self.GetCursor().execute(createTablePrio)
-        
+
         # Add priority if empty
         self.GetCursor().execute("SELECT * From Prioritas")
         if len(self.GetCursor().fetchall()) == 0:
@@ -36,24 +37,25 @@ class Database:
             self.InsertPrio(50, "tucil")
             self.InsertPrio(30, "kuis")
 
-    def InsertTask(self,id, matkul, jenis, deskripsi, tanggal):
-        insertTask = '''INSERT INTO Task VALUES ('{}', '{}', '{}', '{}', '{}'); '''.format(id, matkul, jenis, deskripsi,
-                                                                                           tanggal)
+    def InsertTask(self, id, matkul, jenis, deskripsi, tanggal):
+        insertTask = '''INSERT INTO Task VALUES ('{}', '{}', '{}', '{}', '{}'); '''.format(
+            id, matkul, jenis, deskripsi, tanggal)
         self.GetCursor().execute(insertTask)
         self.GetConnection().commit()
 
-    def InsertPrio(self,nilai, jenis):
-        insertTask = '''INSERT INTO Prioritas VALUES ({}, '{}'); '''.format(nilai,jenis)
+    def InsertPrio(self, nilai, jenis):
+        insertTask = '''INSERT INTO Prioritas VALUES ({}, '{}'); '''.format(
+            nilai, jenis)
         self.GetCursor().execute(insertTask)
         self.GetConnection().commit()
-        
+
     def GetConnection(self):
         if not self.connected:
-            self.connection = sqlite3.connect('../test/database.db')
+            self.connection = sqlite3.connect('../database.db')
             self.cursor = self.connection.cursor()
             self.connected = True
         return self.connection
-        
+
     def GetCursor(self):
         if not self.connected:
             self.connection = sqlite3.connect('../test/database.db')
@@ -61,5 +63,5 @@ class Database:
             self.connected = True
         return self.cursor
 
-    #def __del__(self):
+    # def __del__(self):
     #    connection.close()
