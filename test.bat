@@ -1,6 +1,5 @@
 @echo off
-cd test
-ln -s ../src src
+cd src
 pytest -q DatabaseClassTest.py
-rm -r src
+pytest -q GetDueTodayTaskCommandTest.py
 cd ..
