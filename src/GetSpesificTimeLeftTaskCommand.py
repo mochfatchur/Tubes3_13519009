@@ -3,7 +3,7 @@ from datetime import datetime
 from datetime import timedelta
 
 
-class GetSpesificTimeLeftTask:
+class GetSpesificTimeLeftTaskCommand:
     def __init__(self, jenisTask="", N=0):
         self.jenisTask = jenisTask
         self.tempResult = ""
