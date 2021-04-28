@@ -3,7 +3,20 @@ from GetAllTaskCommand import GetAllTaskCommand
 from GetSpesificTimeLeftTaskCommand import GetSpesificTimeLeftTaskCommand
 from GetDueTodayTaskCommand import GetDueTodayTaskCommand
 from AddTaskCommand import AddTaskCommand
+from ContextIdentifier import Context
 from datetime import datetime
+
+"""
+    
+     = 3
+     = 4
+
+    updateTask = 6
+    deleteTask = 7
+    getDeadlineOfTask = 8
+    help = 10
+    unknown = 9
+"""
 
 class Extractor:
     def __init__(self):
@@ -12,7 +25,7 @@ class Extractor:
 
     # Return command that will be executed
     def extract(self, message, context):
-        if context == "AddTask":
+        if context == Context.addTask:
             daftar_bulan = [
                 "januari",
                 "februari",
@@ -93,7 +106,7 @@ class Extractor:
                         jenis = result4.group(1).lower() if result4.group(1).lower() not in ["uas", "uts"] else "ujian",
                         matkul = result4.group(2),
                         deskripsi = result4.group(3) if result4.group(1).lower() not in ["uas", "uts"] else result4.group(1),
-                        tahun = int(result1.group(6)) if len(result1.group(6)) == 4 else int("20" + result1.group(6)),
+                        tahun = int(result4.group(6)) if len(result4.group(6)) == 4 else int("20" + result1.group(6)),
                         bulan = daftar_bulan.index(result4.group(5).lower()) + 1,
                         tanggal = int(result4.group(4))
                     )
@@ -110,7 +123,7 @@ class Extractor:
                         jenis = result5.group(1).lower() if result5.group(1).lower() not in ["uas", "uts"] else "ujian",
                         matkul = result5.group(2),
                         deskripsi = result5.group(3) if result5.group(1).lower() not in ["uas", "uts"] else result5.group(1),
-                        tahun = int(result1.group(6)) if len(result1.group(6)) == 4 else int("20" + result1.group(6)),
+                        tahun = int(result5.group(6)) if len(result5.group(6)) == 4 else int("20" + result1.group(6)),
                         bulan = daftar_bulan.index(result5.group(5).lower()) + 1,
                         tanggal = int(result5.group(4))
                     )
@@ -136,7 +149,7 @@ class Extractor:
             
             return None
 
-        elif context == "GetAllTask":
+        elif context == Context.getAllTask:
             # Extract jenis task
             getAllTaskPattern = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
             result = re.search(getAllTaskPattern, message)
@@ -150,11 +163,11 @@ class Extractor:
 
             return None
 
-        elif context == "GetRangeTimeTask":
+        elif context == Context.getRangeTimeTask:
             # Implement here
             return None
 
-        elif context == "GetSpecificTimeLeftTask":
+        elif context == Context.getSpesificTimeLeftTask:
             getSpesificTimeLeftTaskPattern1 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
             getSpesificTimeLeftTaskPattern2 = r"(([Hh]ari)|[Mm]inggu)"
             getSpesificTimeLeftTaskPattern3 = r"\d+"
@@ -183,7 +196,7 @@ class Extractor:
 
             return None
 
-        elif context == "GetDueTodayTask":
+        elif context == Context.getDueTodayTask:
             getDueTodayPattern1 = r"[dD]eadline (kuis|tubes|tucil|ujian|)"
             getDueTodayPattern2 = r"(?:([Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|),? |)(?:yang )?deadline (?:pada )?hari ini apa saja"
 
@@ -207,11 +220,11 @@ class Extractor:
 
             return None
 
-        elif context == "UpdateTask":
+        elif context == Context.updateTask:
             # Implement here
             return None
 
-        elif context == "DeleteTask":
+        elif context == Context.deleteTask:
             # Extract nama matkul
             deleteTaskPattern1 = r"([A-Z]{2}[0-9]{4})"
             # Extract jenis task

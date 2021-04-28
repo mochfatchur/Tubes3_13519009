@@ -1,6 +1,8 @@
 # From Flask Tutorial
 
 import os
+from ContextIdentifier import ContextIdentifier, Context
+from SpellChecker import SpellChecker
 from Extractor import Extractor
 
 from flask import (
@@ -11,7 +13,7 @@ from DatabaseClass import Database
 
 global chat_data
 
-chat_data = [("Halo", "Hai")]
+chat_data = [("Halo", ["Hai"])]
 
 app = Flask(__name__)
 
@@ -23,12 +25,42 @@ def hello():
 def hello2():
     user_input = request.form["user-input"]
     
-    # Misalkan konteksnya GetDueTodayTask semua
-    extractor = Extractor()
-    command = extractor.extract(user_input, "GetDueTodayTask")
-    command.execute()
-    bot_response = command.getResult()
-    chat_data.append((user_input, bot_response))
+    context_identifier = ContextIdentifier()
+    context = context_identifier.getContext(user_input)
+    
+    """
+    addTask = 1
+    getAllTask = 2
+    getRangeTimeTask = 3
+    getSpesificTimeLeftTask = 4
+    getDueTodayTask = 5
+    updateTask = 6
+    deleteTask = 7
+    getDeadlineOfTask = 8
+    help = 10
+    unknown = 9
+    """
+    
+    if context == Context.unknown:
+        suggested_word = SpellChecker().getWordSuggestion(user_input)
+        bot_response = ("Maksud Anda: " + str(suggested_word)) if len(suggested_word) > 0 else "wut"
+
+    elif context == Context.help:
+        bot_response = "Terdapat 8 hal yang dapat dilakukan:\n"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+    
+    else:
+        extractor = Extractor()
+        command = extractor.extract(user_input, context)
+        
+        if command == None:
+            suggested_word = SpellChecker().getWordSuggestion(user_input)
+            bot_response = ("Maksud Anda: " + str(suggested_word)) if len(suggested_word) > 0 else "wut"
+        else:
+            command.execute()
+            bot_response = command.getResult()
+            
+    chat_data.append((user_input, bot_response.split("\n")))
     return render_template("index.html", message_data = chat_data[(-5 if len(chat_data) >= 5 else 0):])
 # return "You said \"{}\"".format(request.form["user-input"])
 

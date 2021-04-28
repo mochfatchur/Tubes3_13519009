@@ -43,7 +43,7 @@ class AddTaskCommand:
                     new_id = str(max(list(map(lambda row: int(row[0]), id_result))) + 1)
                 
                 print(new_id)
-                new_id = int(new_id) + 1
+                new_id = int(new_id)
                 
                 #(self,id, matkul, jenis, deskripsi, tanggal):
                 database.InsertTask(
@@ -56,7 +56,7 @@ class AddTaskCommand:
                 database.GetConnection().commit()
                 
                 self.tempResult = "Task berhasil ditambahkan! ^o^\n"
-                self.tempResult = "(ID: {}) {} - {} - {} - {}".format(new_id, self.matkul, self.jenis, self.deskripsi, "{:0>4}-{:0>2}-{:0>2}".format(self.tahun, self.bulan, self.tanggal))
+                self.tempResult += "(ID: {}) {} - {} - {} - {}".format(new_id, self.matkul, self.jenis, self.deskripsi, "{:0>4}-{:0>2}-{:0>2}".format(self.tahun, self.bulan, self.tanggal))
             
             else:
                 self.tempResult = "Saya tidak mengenal jenis \"{}\" ... .-.".format(self.jenis)

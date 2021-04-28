@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Judul</title>
+		<title>Simple Deadline Assistant - Gajah</title>
 		<link link rel="stylesheet" href={{ url_for('static', filename='style.css') }}>
 	</head>
 	<body>
 		<header>
-			<h1>Judul di sini</h1>
+			<h1>Gajah</h1>
+			<p>Gajah tidak pernah lupa (kecuali di-restart)</p>
 		</header>
 		<main>
 			<div id="content">
@@ -16,13 +17,15 @@
 						<p>{{ message[0] }}</p>
 					</div>
 					<div class="bot-message">
-						<p>{{ message[1] }}</p>
+						{% for bot_message_line in message[1] %}
+						<p>{{ bot_message_line }}</p>
+						{% endfor %}
 					</div>
 					{% endfor %}
 				</section>
 				<section id="input-area">
 					<form method="post">
-						<input name="user-input" placeholder="Pesan" required>
+						<input name="user-input" placeholder="Pesan" required autofocus>
 						<button type="submit">Kirim</button>
 					</form>
 				</section>
