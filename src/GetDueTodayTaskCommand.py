@@ -11,7 +11,7 @@ class GetDueTodayTaskCommand:
             """
             SELECT *
             FROM Task t
-            WHERE t.tanggal = DATE("now")
+            WHERE t.tanggal = DATE("now", "localtime")
             {}
             ORDER BY (
                 SELECT nilai

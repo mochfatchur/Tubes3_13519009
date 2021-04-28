@@ -1,20 +1,7 @@
 from DatabaseClass import Database
 
 class AddTaskCommand:
-    daftar_bulan = [
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "November",
-        "Desember"
-    ]
+    
     
     regex_tanggal = [
         r"\d"
@@ -24,8 +11,6 @@ class AddTaskCommand:
         self.matkul = matkul
         self.jenis = jenis
         self.deskripsi = deskripsi
-        self.tanggal = tanggal
-        self.jenis = jenis
         self.tahun = tahun
         self.bulan = bulan
         self.tanggal = tanggal
