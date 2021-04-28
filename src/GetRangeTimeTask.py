@@ -22,8 +22,8 @@ class GetRangeTimeTask:
         value = database.GetCursor().fetchall()
         dateStart = self.dateStart
         dateEnd = self.dateEnd
-        #print(dateStart)
-        #print(dateEnd)
+        print(dateStart)
+        print(dateEnd)
         result = []
         for i in range(len(value)):
             if (value[i][4] <= dateEnd and value[i][4] >= dateStart):
