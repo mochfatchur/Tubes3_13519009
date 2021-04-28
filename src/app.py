@@ -31,10 +31,16 @@ def hello2():
     
     if context == Context.unknown:
         suggested_word = SpellChecker().getWordSuggestion(user_input)
-        bot_response = ("Maksud Anda: " + str(suggested_word)) if len(suggested_word) > 0 else "wut"
 
     elif context == Context.help:
         bot_response = "Terdapat 8 hal yang dapat dilakukan:\n"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
+        bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
         bot_response += "- Menambah tugas (coba \"Tolong ingatkan kalau ada kuis IF3110 Bab 2 pada 22/04/21\")"
     
     else:
@@ -43,7 +49,6 @@ def hello2():
         
         if command == None:
             suggested_word = SpellChecker().getWordSuggestion(user_input)
-            bot_response = ("Maksud Anda: " + str(suggested_word)) if len(suggested_word) > 0 else "wut"
         else:
             command.execute()
             bot_response = command.getResult()
