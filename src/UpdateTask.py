@@ -42,7 +42,7 @@ class UpdateTask():
                         WHERE nama_matkul = "{}" AND jenis = "{}"
                     """.format(self.deadlineBaru,self.namaMatkul, self.jenisTask))
                 database.GetConnection().commit()
-                self.tempResult = "Yay deadline tugas telah diperbaharui!!!\n"
+                self.tempResult = "Yay deadline tugas telah diperbaharui menjadi {} !!!\n".format(self.deadlineBaru)
             else:
                 self.tempResult += "Tidak ada {} {}".format(
                     self.jenisTask, self.namaMatkul)

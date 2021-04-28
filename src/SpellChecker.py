@@ -16,6 +16,8 @@ class SpellChecker:
             current_suggestion = suggested_word_candidate_set - word_suggestion
             for suggested_word_candidate in current_suggestion:
                 distance = self.distance_counter.getDistance(word, suggested_word_candidate)
+                if distance == 0:
+                    continue
                 value = 1 - distance/max(len(word), len(suggested_word_candidate))
                 if value > self.sim_min:
                     word_suggestion.add(suggested_word_candidate)

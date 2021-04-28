@@ -1,9 +1,11 @@
 import re
 from GetAllTaskCommand import GetAllTaskCommand
+from GetDeadlineOfTask import  GetDeadlineOfTask
 from GetSpecificTimeLeftTaskCommand import GetSpecificTimeLeftTaskCommand
 from GetDueTodayTaskCommand import GetDueTodayTaskCommand
 from AddTaskCommand import AddTaskCommand
 from ContextIdentifier import Context
+from UpdateTask import UpdateTask
 from DeleteTaskCommand import DeleteTaskCommand
 from datetime import datetime
 
@@ -157,9 +159,9 @@ class Extractor:
             return None
 
         elif context == Context.getSpesificTimeLeftTask:
-            getSpesificTimeLeftTaskPattern1 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
-            getSpesificTimeLeftTaskPattern2 = r"(([Hh]ari)|[Mm]inggu)"
-            getSpesificTimeLeftTaskPattern3 = r"\d+"
+            getSpecificTimeLeftTaskPattern1 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            getSpecificTimeLeftTaskPattern2 = r"(([Hh]ari)|[Mm]inggu)"
+            getSpecificTimeLeftTaskPattern3 = r"\d+"
 
             result1 = re.search(
                 getSpecificTimeLeftTaskPattern1, message)
@@ -206,7 +208,26 @@ class Extractor:
             return None
 
         elif context == Context.updateTask:
-            # Implement here
+            # Extract jenis task
+            updateTaskPattern1 = "[Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|(?:UAS|uas)|(?:UTS|uts)"
+            # Extract nama matkul
+            updateTaskPattern2 = r"([A-Z]{2}[0-9]{4})"
+            # Extract deadlineBaru
+            tanggalPattern = r"0?[1-9]|[1-2][0-9]|3[01]"
+            bulanAngkaPattern = r"0?[1-9]|1[0-2]"
+            bulanTulisanPattern = r"[Jj]anuari|[Ff]ebruari|[Mm]aret|[Aa]pril|[Mm]ei|[Jj]uni|[Jj]uli|[Aa]gustus|[Ss]eptember|[Oo]ktober|[Nn]ovember|[Dd]esember"
+            tahunPattern = r"(?:[0-9][0-9])?[0-9][0-9]"
+
+            addPattern1 = r"({})[/\-]({})[/\-]({})".format(tanggalPattern, bulanAngkaPattern, tahunPattern)
+
+            result1 = re.search(updateTaskPattern1, message)
+            result2 = re.search(updateTaskPattern2, message)
+            result3 = re.search(addPattern1, message)
+
+            if ((result1 is not None) and (result2 is not None) and (result3 is not None)):
+                return UpdateTask(result1.group(), result2.group(),
+                                  "-".join(result3.group().replace("/", "-").split("-")[::-1]))
+
             return None
 
         elif context == Context.deleteTask:
@@ -228,7 +249,18 @@ class Extractor:
             return None
         
         elif context == Context.getDeadlineOfTask:
-            # Implement here
+            # Extract matkul task
+            getDeadlineTaskPattern1 = r"[A-Z]{2}[0-9]{4}"
+            getDeadlineTaskPattern2 = r"[Tt]ubes|[Tt]ucil"
+            result1 = re.search(getDeadlineTaskPattern1, message)
+            result2 = re.search(getDeadlineTaskPattern2, message)
+            if result1 is not None:
+                if result2 is not None:
+                    return GetDeadlineOfTask(matkul=result1.group(), jenisTask=result2.group().lower())
+
+                else:
+                    return GetDeadlineOfTask(matkul=result1.group(), jenisTask="")
+
             return None
         
         else:
