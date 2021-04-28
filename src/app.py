@@ -24,22 +24,8 @@ def hello():
 @app.route('/', methods=["POST"])
 def hello2():
     user_input = request.form["user-input"]
-    
     context_identifier = ContextIdentifier()
     context = context_identifier.getContext(user_input)
-    
-    """
-    addTask = 1
-    getAllTask = 2
-    getRangeTimeTask = 3
-    getSpesificTimeLeftTask = 4
-    getDueTodayTask = 5
-    updateTask = 6
-    deleteTask = 7
-    getDeadlineOfTask = 8
-    help = 10
-    unknown = 9
-    """
     
     if context == Context.unknown:
         suggested_word = SpellChecker().getWordSuggestion(user_input)
@@ -62,7 +48,6 @@ def hello2():
             
     chat_data.append((user_input, bot_response.split("\n")))
     return render_template("index.html", message_data = chat_data[(-5 if len(chat_data) >= 5 else 0):])
-# return "You said \"{}\"".format(request.form["user-input"])
 
 app.run(debug=True)
 print(chat_data)

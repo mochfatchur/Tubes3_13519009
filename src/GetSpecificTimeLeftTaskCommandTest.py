@@ -1,7 +1,8 @@
 import pytest
 from DatabaseClass import Database
-from GetSpesificTimeLeftTaskCommand import GetSpesificTimeLeftTaskCommand
+from GetSpecificTimeLeftTaskCommand import GetSpecificTimeLeftTaskCommand
 from datetime import datetime
+from datetime import timedelta
 
 
 class TestClass:
@@ -9,8 +10,8 @@ class TestClass:
     @pytest.fixture
     def used_data(self):
         return [
-            ("TEST_GDTTCT_001", "IF2220", "kuis", "Regresi", "2021-04-28"),
-            ("TEST_GDTTCT_002", "IF2230", "tubes", "System Call", "2021-04-30"),
+            ("TEST_GDTTCT_001", "IF2220", "kuis", "Regresi", str(datetime.date(datetime.now() + timedelta(days=2)))),
+            ("TEST_GDTTCT_002", "IF2230", "tubes", "System Call", str(datetime.date(datetime.now() + timedelta(days=3)))),
             ("TEST_GDTTCT_003", "IF2250", "tubes", "Demo", str(datetime.date(datetime.now()))),
             ("TEST_GDTTCT_004", "IF2240", "ujian", "UAS", str(datetime.date(datetime.now())))
         ]
@@ -37,7 +38,7 @@ class TestClass:
         request.addfinalizer(cleanup)
 
     def test_normal_result(self, initialization):
-        taskCommand = GetSpesificTimeLeftTaskCommand(
+        taskCommand = GetSpecificTimeLeftTaskCommand(
             jenisTask="", N=2)
         taskCommand.execute()
         result = taskCommand.getResult()
@@ -51,7 +52,7 @@ class TestClass:
         print("--- END OF RESULT ---")
 
     def test_with_specified_task_result(self, initialization):
-        taskCommand = GetSpesificTimeLeftTaskCommand(
+        taskCommand = GetSpecificTimeLeftTaskCommand(
             jenisTask="tubes", N=2)
         taskCommand.execute()
         result = taskCommand.getResult()
@@ -66,7 +67,7 @@ class TestClass:
         print("--- END OF RESULT ---")
 
     def test_with_no_result(self, initialization):
-        taskCommand = GetSpesificTimeLeftTaskCommand(
+        taskCommand = GetSpecificTimeLeftTaskCommand(
             jenisTask="tucil", N=4)
         taskCommand.execute()
         result = taskCommand.getResult()

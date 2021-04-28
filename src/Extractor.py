@@ -1,22 +1,11 @@
 import re
 from GetAllTaskCommand import GetAllTaskCommand
-from GetSpesificTimeLeftTaskCommand import GetSpesificTimeLeftTaskCommand
+from GetSpecificTimeLeftTaskCommand import GetSpecificTimeLeftTaskCommand
 from GetDueTodayTaskCommand import GetDueTodayTaskCommand
 from AddTaskCommand import AddTaskCommand
-from ContextIdentifier import Context
+from ContextIdentifier import Context]
+from DeleteTaskCommand import DeleteTaskCommand
 from datetime import datetime
-
-"""
-    
-     = 3
-     = 4
-
-    updateTask = 6
-    deleteTask = 7
-    getDeadlineOfTask = 8
-    help = 10
-    unknown = 9
-"""
 
 class Extractor:
     def __init__(self):
@@ -151,7 +140,7 @@ class Extractor:
 
         elif context == Context.getAllTask:
             # Extract jenis task
-            getAllTaskPattern = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            getAllTaskPattern = r"[Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|(?:UAS|uas)|(?:UTS|uts)"
             result = re.search(getAllTaskPattern, message)
             # Kalau jenisnya spesifik
             if result is not None:
@@ -173,27 +162,23 @@ class Extractor:
             getSpesificTimeLeftTaskPattern3 = r"\d+"
 
             result1 = re.search(
-                getSpesificTimeLeftTaskPattern1, message)
+                getSpecificTimeLeftTaskPattern1, message)
             result2 = re.search(
-                getSpesificTimeLeftTaskPattern2, message)
+                getSpecificTimeLeftTaskPattern2, message)
             result3 = re.search(
-                getSpesificTimeLeftTaskPattern2, message)
+                getSpecificTimeLeftTaskPattern3, message)
 
-            if (result1 is not None and result2.group().lower() ==
-                    "hari" and result3 is not None):
-                return GetSpesificTimeLeftTaskCommand(
-                    jenisTask=result1.group().lower(), N=int(result3))
-            elif (result1 is not None and result2.group().lower() ==
-                    "minggu" and result3 is not None):
-                return GetSpesificTimeLeftTaskCommand(
-                    jenisTask=result1.group().lower(), N=int(result3) * 7)
-            elif (result2.group().lower() == "hari" and result3 is None):
-                return GetSpesificTimeLeftTaskCommand(
-                    N=int(result3))
-            elif (result2.group().lower() == "minggu" and result3 is None):
-                return GetSpesificTimeLeftTaskCommand(
-                    N=int(result3) * 7)
-
+            if (result2 is not None and result3 is not None):
+                if (result1 is not None):
+                    if(result2.group().lower() == "hari"):
+                        return GetSpecificTimeLeftTaskCommand(jenisTask=result1.group().lower(),N=int(result3.group()))
+                    elif (result2.group().lower() == "minggu"):
+                        return GetSpecificTimeLeftTaskCommand(jenisTask=result1.group().lower(),N=int(result3.group())*7)
+                else:
+                    if(result2.group().lower() == "hari"):
+                        return GetSpecificTimeLeftTaskCommand(N=int(result3.group()))
+                    elif (result2.group().lower() == "minggu"):
+                        return GetSpecificTimeLeftTaskCommand(N=int(result3.group())*7)
             return None
 
         elif context == Context.getDueTodayTask:
@@ -228,7 +213,7 @@ class Extractor:
             # Extract nama matkul
             deleteTaskPattern1 = r"([A-Z]{2}[0-9]{4})"
             # Extract jenis task
-            deleteTaskPattern2 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            deleteTaskPattern2 = r"[Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|(?:UAS|uas)|(?:UTS|uts)"
             result1 = re.search(deleteTaskPattern1, message)
             result2 = re.search(deleteTaskPattern2, message)
             # Spesifik 1 task
@@ -241,7 +226,11 @@ class Extractor:
                 return DeleteTaskCommand(
                     jenisTask=result2.group().lower())
             return None
-
+        
+        elif context == Context.getDeadlineOfTask:
+            # Implement here
+            return None
+        
         else:
             print(
                 "Warning!\nUnknown context for extractor: {}".format(context))
