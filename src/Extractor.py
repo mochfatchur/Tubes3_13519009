@@ -139,7 +139,7 @@ class Extractor:
 
         elif context == "GetAllTask":
             # Extract jenis task
-            getAllTaskPattern = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            getAllTaskPattern = r"[Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|(?:UAS|uas)|(?:UTS|uts)"
             result = re.search(getAllTaskPattern, message)
             # Kalau jenisnya spesifik
             if result is not None:
@@ -156,7 +156,7 @@ class Extractor:
             return None
 
         elif context == "GetSpecificTimeLeftTask":
-            getSpecificTimeLeftTaskPattern1 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            getSpecificTimeLeftTaskPattern1 = r"[Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|(?:UAS|uas)|(?:UTS|uts)"
             getSpecificTimeLeftTaskPattern2 = r"(([Hh]ari)|[Mm]inggu)"
             getSpecificTimeLeftTaskPattern3 = r"\d+"
 
@@ -213,7 +213,7 @@ class Extractor:
             # Extract nama matkul
             deleteTaskPattern1 = r"([A-Z]{2}[0-9]{4})"
             # Extract jenis task
-            deleteTaskPattern2 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            deleteTaskPattern2 = r"[Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|(?:UAS|uas)|(?:UTS|uts)"
             result1 = re.search(deleteTaskPattern1, message)
             result2 = re.search(deleteTaskPattern2, message)
             # Spesifik 1 task

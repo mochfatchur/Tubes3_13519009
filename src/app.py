@@ -25,7 +25,7 @@ def hello2():
     
     # Misalkan konteksnya GetDueTodayTask semua
     extractor = Extractor()
-    command = extractor.extract(user_input, "GetDueTodayTask")
+    command = extractor.extract(user_input, "GetSpecificTimeLeftTask")
     command.execute()
     bot_response = command.getResult()
     chat_data.append((user_input, bot_response))
