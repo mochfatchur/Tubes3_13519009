@@ -3,7 +3,7 @@ from GetAllTaskCommand import GetAllTaskCommand
 from GetSpecificTimeLeftTaskCommand import GetSpecificTimeLeftTaskCommand
 from GetDueTodayTaskCommand import GetDueTodayTaskCommand
 from AddTaskCommand import AddTaskCommand
-from ContextIdentifier import Context]
+from ContextIdentifier import Context
 from DeleteTaskCommand import DeleteTaskCommand
 from datetime import datetime
 
