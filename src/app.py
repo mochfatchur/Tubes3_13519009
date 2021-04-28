@@ -13,7 +13,7 @@ from DatabaseClass import Database
 
 global chat_data
 
-chat_data = [("Halo", ["Hai"])]
+chat_data = []
 
 app = Flask(__name__)
 
@@ -26,6 +26,8 @@ def hello2():
     user_input = request.form["user-input"]
     context_identifier = ContextIdentifier()
     context = context_identifier.getContext(user_input)
+    bot_response = ""
+    suggested_word = []
     
     if context == Context.unknown:
         suggested_word = SpellChecker().getWordSuggestion(user_input)
@@ -45,6 +47,12 @@ def hello2():
         else:
             command.execute()
             bot_response = command.getResult()
+            
+    if bot_response == "":
+        if len(suggested_word) > 0:
+            bot_response = "Mungkin maksud kata kunci Anda: " + ", ".join(suggested_word)
+        else:
+            bot_response = "Saya tidak paham .-."
             
     chat_data.append((user_input, bot_response.split("\n")))
     return render_template("index.html", message_data = chat_data[(-5 if len(chat_data) >= 5 else 0):])
