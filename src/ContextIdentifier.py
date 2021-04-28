@@ -37,9 +37,13 @@ class ContextIdentifier:
         contextWord = ""
         for word in self.keyword:
             matcher = KmpMatcher()
-            if (matcher.match(word, text)):
+            print("Word: " + word)
+            if (matcher.match(word, text.lower())):
                 contextWord = word
+                print("Got it!")
                 break # found
+            
+            print("No.")
                 
         if (contextWord == "sejauh ini"):
             return Context.getAllTask

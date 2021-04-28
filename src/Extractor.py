@@ -182,7 +182,7 @@ class Extractor:
             return None
 
         elif context == Context.getDueTodayTask:
-            getDueTodayPattern1 = r"[dD]eadline (kuis|tubes|tucil|ujian|)"
+            getDueTodayPattern1 = r"(?:[Tt]ugas|[dD]eadline) ?(kuis|tubes|tucil|ujian|)"
             getDueTodayPattern2 = r"(?:([Kk]uis|[Tt]ubes|[Tt]ucil|[Uu]jian|),? |)(?:yang )?deadline (?:pada )?hari ini apa saja"
 
             result2 = re.search(getDueTodayPattern2, message)
