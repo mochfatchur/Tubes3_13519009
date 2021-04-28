@@ -58,10 +58,14 @@ class Database:
 
     def GetCursor(self):
         if not self.connected:
-            self.connection = sqlite3.connect('../test/database.db')
+            self.connection = sqlite3.connect('../database.db')
             self.cursor = self.connection.cursor()
             self.connected = True
         return self.cursor
 
+
+
     # def __del__(self):
     #    connection.close()
+
+

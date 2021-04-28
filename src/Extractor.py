@@ -1,8 +1,9 @@
 import re
 from GetAllTaskCommand import GetAllTaskCommand
-from GetSpesificTimeLeftTaskCommand import GetSpesificTimeLeftTaskCommand
+from GetSpecificTimeLeftTaskCommand import GetSpecificTimeLeftTaskCommand
 from GetDueTodayTaskCommand import GetDueTodayTaskCommand
 from AddTaskCommand import AddTaskCommand
+from DeleteTaskCommand import DeleteTaskCommand
 from datetime import datetime
 
 class Extractor:
@@ -155,33 +156,30 @@ class Extractor:
             return None
 
         elif context == "GetSpecificTimeLeftTask":
-            getSpesificTimeLeftTaskPattern1 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
-            getSpesificTimeLeftTaskPattern2 = r"(([Hh]ari)|[Mm]inggu)"
-            getSpesificTimeLeftTaskPattern3 = r"\d+"
+            getSpecificTimeLeftTaskPattern1 = r"([Tt](ucil|ubes))|([Kk]uis)|([Uu]jian)"
+            getSpecificTimeLeftTaskPattern2 = r"(([Hh]ari)|[Mm]inggu)"
+            getSpecificTimeLeftTaskPattern3 = r"\d+"
 
             result1 = re.search(
-                getSpesificTimeLeftTaskPattern1, message)
+                getSpecificTimeLeftTaskPattern1, message)
             result2 = re.search(
-                getSpesificTimeLeftTaskPattern2, message)
+                getSpecificTimeLeftTaskPattern2, message)
             result3 = re.search(
-                getSpesificTimeLeftTaskPattern2, message)
+                getSpecificTimeLeftTaskPattern3, message)
 
-            if (result1 is not None and result2.group().lower() ==
-                    "hari" and result3 is not None):
-                return GetSpesificTimeLeftTaskCommand(
-                    jenisTask=result1.group().lower(), N=int(result3))
-            elif (result1 is not None and result2.group().lower() ==
-                    "minggu" and result3 is not None):
-                return GetSpesificTimeLeftTaskCommand(
-                    jenisTask=result1.group().lower(), N=int(result3) * 7)
-            elif (result2.group().lower() == "hari" and result3 is None):
-                return GetSpesificTimeLeftTaskCommand(
-                    N=int(result3))
-            elif (result2.group().lower() == "minggu" and result3 is None):
-                return GetSpesificTimeLeftTaskCommand(
-                    N=int(result3) * 7)
-
+            if (result2 is not None and result3 is not None):
+                if (result1 is not None):
+                    if(result2.group().lower() == "hari"):
+                        return GetSpecificTimeLeftTaskCommand(jenisTask=result1.group().lower(),N=int(result3.group()))
+                    elif (result2.group().lower() == "minggu"):
+                        return GetSpecificTimeLeftTaskCommand(jenisTask=result1.group().lower(),N=int(result3.group())*7)
+                else:
+                    if(result2.group().lower() == "hari"):
+                        return GetSpecificTimeLeftTaskCommand(N=int(result3.group()))
+                    elif (result2.group().lower() == "minggu"):
+                        return GetSpecificTimeLeftTaskCommand(N=int(result3.group())*7)
             return None
+
 
         elif context == "GetDueTodayTask":
             getDueTodayPattern1 = r"[dD]eadline (kuis|tubes|tucil|ujian|)"
