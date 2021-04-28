@@ -1,6 +1,6 @@
 import pytest
 from DatabaseClass import Database
-from DeleteTask import DeleteTask
+from GetSpesificTimeLeftTaskCommand import GetSpesificTimeLeftTaskCommand
 from datetime import datetime
 
 
@@ -37,40 +37,41 @@ class TestClass:
         request.addfinalizer(cleanup)
 
     def test_normal_result(self, initialization):
-        # database = Database()
-        # print(database.GetCursor().execute(
-        #     "SELECT * FROM Task").fetchall())
-        taskCommand = DeleteTask(
-            jenisTask="tubes", namaMatkul="IF2230")
+        taskCommand = GetSpesificTimeLeftTaskCommand(
+            jenisTask="", N=2)
         taskCommand.execute()
         result = taskCommand.getResult()
         assert result != ""
-        # assert "TEST_GDTTCT_001" in result
-        # assert "TEST_GDTTCT_002" not in result
-        # assert "TEST_GDTTCT_003" in result
-        # assert "TEST_GDTTCT_004" in result
-        assert "Yay tugas sudah selesai!!!" in result
+        assert "TEST_GDTTCT_001" in result
+        assert "TEST_GDTTCT_002" not in result
+        assert "TEST_GDTTCT_003" in result
+        assert "TEST_GDTTCT_004" in result
+        print("--- RESULT ---")
+        print(result)
+        print("--- END OF RESULT ---")
+
+    def test_with_specified_task_result(self, initialization):
+        taskCommand = GetSpesificTimeLeftTaskCommand(
+            jenisTask="tubes", N=2)
+        taskCommand.execute()
+        result = taskCommand.getResult()
+        assert result != ""
+        assert "TEST_GDTTCT_001" not in result
+        assert "TEST_GDTTCT_002" not in result
+        assert "TEST_GDTTCT_003" in result
+        assert "TEST_GDTTCT_004" not in result
+
         print("--- RESULT ---")
         print(result)
         print("--- END OF RESULT ---")
 
     def test_with_no_result(self, initialization):
-        taskCommand = DeleteTask(
-            jenisTask="tucil", namaMatkul="IF2230")
+        taskCommand = GetSpesificTimeLeftTaskCommand(
+            jenisTask="tucil", N=4)
         taskCommand.execute()
         result = taskCommand.getResult()
-
-        assert "Tidak ada tucil yang harus dikerjakan" in result
-        print("--- RESULT ---")
-        print(result)
-        print("--- END OF RESULT ---")
-
-    def test_task_not_found(self, initialization):
-        taskCommand = DeleteTask(
-            jenisTask="tubes", namaMatkul="IF2220")
-        taskCommand.execute()
-        result = taskCommand.getResult()
-        assert "Tidak ada tubes IF2220" in result
+        assert result != ""
+        assert "GDTTCT" not in result
         print("--- RESULT ---")
         print(result)
         print("--- END OF RESULT ---")

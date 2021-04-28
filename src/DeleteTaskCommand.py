@@ -1,7 +1,7 @@
 from DatabaseClass import Database
 
 
-class DeleteTask():
+class DeleteTaskCommand():
     def __init__(self, jenisTask="", namaMatkul=""):
         self.jenisTask = jenisTask
         self.namaMatkul = namaMatkul
