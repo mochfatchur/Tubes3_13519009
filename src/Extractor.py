@@ -2,6 +2,7 @@ import re
 from GetAllTaskCommand import GetAllTaskCommand
 from GetDeadlineOfTask import  GetDeadlineOfTask
 from GetSpecificTimeLeftTaskCommand import GetSpecificTimeLeftTaskCommand
+from GetRangeTimeTask import GetRangeTimeTask
 from GetDueTodayTaskCommand import GetDueTodayTaskCommand
 from AddTaskCommand import AddTaskCommand
 from ContextIdentifier import Context
@@ -155,7 +156,20 @@ class Extractor:
             return None
 
         elif context == Context.getRangeTimeTask:
-            # Implement here
+            # Extract tanggal
+            tanggalPattern = r"0?[1-9]|[1-2][0-9]|3[01]"
+            bulanAngkaPattern = r"0?[1-9]|1[0-2]"
+            bulanTulisanPattern = r"[Jj]anuari|[Ff]ebruari|[Mm]aret|[Aa]pril|[Mm]ei|[Jj]uni|[Jj]uli|[Aa]gustus|[Ss]eptember|[Oo]ktober|[Nn]ovember|[Dd]esember"
+            tahunPattern = r"(?:[0-9][0-9])?[0-9][0-9]"
+
+            addPattern1 = r"((?:{0})[/\-](?:{1})[/\-](?:{2})).*((?:{0})[/\-](?:{1})[/\-](?:{2}))".format(tanggalPattern, bulanAngkaPattern, tahunPattern)
+            result = re.search(addPattern1, message)
+            if(addPattern1 is not None):
+                tanggal1 = "-".join(result.group(1).replace("/", "-").split("-")[::-1])
+                tanggal2 = "-".join(result.group(2).replace("/", "-").split("-")[::-1])
+
+                return GetRangeTimeTask(dateStart=tanggal1,dateEnd=tanggal2)
+
             return None
 
         elif context == Context.getSpesificTimeLeftTask:
